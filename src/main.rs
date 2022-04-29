@@ -4,6 +4,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 use yodlee_rs::Client;
 
+mod account;
 mod user;
 
 /// Yodlee command line app
@@ -11,23 +12,23 @@ mod user;
 #[clap(version)]
 struct Opts {
     /// Yodlee API endpoint
-    #[clap(short = 'e', long)]
+    #[clap(short = 'e', long, env = "YODLEE_API_ENDPOINT")]
     api_endpoint: String,
 
     /// Yodlee API version
-    #[clap(short = 'v', long)]
+    #[clap(short = 'v', long, env = "YODLEE_API_VERSION")]
     api_version: String,
 
     /// Admin login name
-    #[clap(short = 'a', long)]
+    #[clap(short = 'a', long, env = "YODLEE_ADMIN_LOGIN_NAME")]
     admin_login_name: String,
 
     /// Yodlee client ID
-    #[clap(short = 'c', long)]
+    #[clap(short = 'c', long, env = "YODLEE_CLIENT_ID")]
     client_id: String,
 
     /// Yodlee client secret
-    #[clap(short = 's', long)]
+    #[clap(short = 's', long, env = "YODLEE_CLIENT_SECRET")]
     client_secret: String,
 
     /// The command to run
@@ -40,6 +41,20 @@ enum Command {
     /// User management commands
     #[clap(subcommand)]
     User(UserCommand),
+
+    /// Account management commands
+    #[clap(subcommand)]
+    Account(AccountCommand),
+}
+
+#[derive(Subcommand, Debug)]
+pub enum AccountCommand {
+    /// List accounts held by user
+    Get {
+        /// The user's login name
+        #[clap(short, long)]
+        login_name: String,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -81,6 +96,7 @@ async fn main() -> Result<()> {
 
     match args.command {
         Command::User(command) => user::process_command(&mut client, command).await?,
+        Command::Account(command) => account::process_command(&mut client, command).await?,
     }
 
     Ok(())

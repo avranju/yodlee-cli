@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.57"
-clap = { version = "3.1.12", features = ["derive"] }
+clap = { version = "3.1.12", features = ["derive", "env"] }
 serde_json = "1.0.79"
 tokio = { version = "1.18.0", features = ["rt-multi-thread", "macros", "fs"] }
-yodlee-rs = { git = "https://github.com/avranju/yodlee-rs.git", rev = "145a8b7815c7114f8e86131db0bbc8900f01470d" }
+yodlee-rs = { git = "https://github.com/avranju/yodlee-rs.git", rev = "2814b1f45196ae5688771fe61df64d77976bdf37" }
