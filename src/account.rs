@@ -14,7 +14,7 @@ pub async fn process_command(client: &mut Client, command: AccountCommand) -> Re
     Ok(())
 }
 
-async fn get_accounts(client: &mut Client, login_name: &str) -> Result<Vec<Account>> {
+async fn get_accounts(client: &mut Client, login_name: &str) -> Result<Option<Vec<Account>>> {
     let mut account = client.account(login_name.to_string());
     let res = account
         .get_accounts(None, None, None, None, None, None)
