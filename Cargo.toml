@@ -10,4 +10,4 @@ anyhow = "1.0.57"
 clap = { version = "3.1.12", features = ["derive", "env"] }
 serde_json = "1.0.79"
 tokio = { version = "1.18.0", features = ["rt-multi-thread", "macros", "fs"] }
-yodlee-rs = { git = "https://github.com/avranju/yodlee-rs.git", rev = "5d431f2b58f46959f36c925add5a35564fe1364d" }
+yodlee-rs = { git = "https://github.com/avranju/yodlee-rs.git", rev = "02aa01c28d78bb1e1690a8e51882c1c08eab4f0f" }

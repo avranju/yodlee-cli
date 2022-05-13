@@ -1,24 +1,42 @@
 use anyhow::Result;
-use yodlee_rs::{models::Account, Client};
+use yodlee_rs::{account::AccountHistoricalBalanceParams, Client};
 
 use crate::AccountCommand;
 
 pub async fn process_command(client: &mut Client, command: AccountCommand) -> Result<()> {
     match command {
         AccountCommand::Get { login_name } => {
-            let accounts = get_accounts(client, &login_name).await?;
-            println!("{:#?}", accounts);
+            let mut account = client.account(login_name);
+            let accounts = account.get_accounts(Default::default()).await?;
+            println!("{:#?}", accounts.account);
+        }
+
+        AccountCommand::History {
+            login_name,
+            include_carry_forward,
+            from_date,
+            to_date,
+            interval,
+            account_reconcile_type,
+            skip,
+            top,
+            account_id,
+        } => {
+            let mut account = client.account(login_name);
+            let params = AccountHistoricalBalanceParams {
+                include_carry_forward,
+                from_date: from_date.as_deref(),
+                to_date: to_date.as_deref(),
+                interval: interval.as_deref(),
+                account_reconcile_type: account_reconcile_type.as_deref(),
+                skip,
+                top,
+                account_id: account_id.as_deref(),
+            };
+            let accounts = account.get_historical_balances(params).await?;
+            println!("{:#?}", accounts.account);
         }
     }
 
     Ok(())
-}
-
-async fn get_accounts(client: &mut Client, login_name: &str) -> Result<Option<Vec<Account>>> {
-    let mut account = client.account(login_name.to_string());
-    let res = account
-        .get_accounts(None, None, None, None, None, None)
-        .await?;
-
-    Ok(res.account)
 }

@@ -55,6 +55,45 @@ pub enum AccountCommand {
         #[clap(short, long)]
         login_name: String,
     },
+
+    /// List history of account balances
+    History {
+        /// The user's login name
+        #[clap(short = 'l', long)]
+        login_name: String,
+
+        /// Consider carry forward logic for missing balances
+        #[clap(short = 'c', long)]
+        include_carry_forward: Option<bool>,
+
+        /// Date from which balances should be retrieved (YYYY-MM-DD)
+        #[clap(short = 'f', long)]
+        from_date: Option<String>,
+
+        /// Date till which balances should be retrieved (YYYY-MM-DD)
+        #[clap(short = 't', long)]
+        to_date: Option<String>,
+
+        /// d-daily, w-weekly or m -monthly
+        #[clap(short = 'i', long)]
+        interval: Option<String>,
+
+        /// UNRECONCILED (default), or RECONCILED
+        #[clap(short = 'r', long)]
+        account_reconcile_type: Option<String>,
+
+        /// Skip the first n records (min: 0)
+        #[clap(short = 's', long)]
+        skip: Option<u32>,
+
+        /// Fetch top N records (max: 500)
+        #[clap(short = 'o', long)]
+        top: Option<u32>,
+
+        /// Account for which the history should be retrieved
+        #[clap(short = 'a', long)]
+        account_id: Option<String>,
+    },
 }
 
 #[derive(Subcommand, Debug)]
