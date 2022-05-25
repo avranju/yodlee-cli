@@ -56,6 +56,17 @@ pub enum AccountCommand {
         login_name: String,
     },
 
+    /// Delete an account
+    Delete {
+        /// The user's login name
+        #[clap(short, long)]
+        login_name: String,
+
+        /// The ID of the account to be deleted
+        #[clap(short, long)]
+        account_id: String,
+    },
+
     /// List history of account balances
     History {
         /// The user's login name

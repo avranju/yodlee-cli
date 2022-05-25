@@ -1077,7 +1077,7 @@ dependencies = [
 [[package]]
 name = "yodlee-rs"
 version = "0.1.0"
-source = "git+https://github.com/avranju/yodlee-rs.git?rev=02aa01c28d78bb1e1690a8e51882c1c08eab4f0f#02aa01c28d78bb1e1690a8e51882c1c08eab4f0f"
+source = "git+https://github.com/avranju/yodlee-rs.git?rev=7f8dffb97f9138c335d40825ca9cc5b75e930314#7f8dffb97f9138c335d40825ca9cc5b75e930314"
 dependencies = [
  "reqwest",
  "serde",

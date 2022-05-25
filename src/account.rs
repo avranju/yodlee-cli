@@ -8,7 +8,16 @@ pub async fn process_command(client: &mut Client, command: AccountCommand) -> Re
         AccountCommand::Get { login_name } => {
             let mut account = client.account(login_name);
             let accounts = account.get_accounts(Default::default()).await?;
-            println!("{:#?}", accounts.account);
+            println!("{}", serde_json::to_string_pretty(&accounts.account)?);
+        }
+
+        AccountCommand::Delete {
+            login_name,
+            account_id,
+        } => {
+            let mut account = client.account(login_name);
+            account.delete(account_id.clone()).await?;
+            println!("Account {} deleted.", account_id);
         }
 
         AccountCommand::History {
@@ -34,7 +43,7 @@ pub async fn process_command(client: &mut Client, command: AccountCommand) -> Re
                 account_id: account_id.as_deref(),
             };
             let accounts = account.get_historical_balances(params).await?;
-            println!("{:#?}", accounts.account);
+            println!("{}", serde_json::to_string_pretty(&accounts.account)?);
         }
     }
 
